@@ -25,26 +25,27 @@ type Flags struct {
 type execCommand struct {
 	*Flags
 
-	Source     string
-	Include    []string
-	Exclude    []string
-	Privileged []string
-	Networks   []string
-	Volumes    map[string]string
-	Environ    map[string]string
-	Labels     map[string]string
-	Secrets    map[string]string
-	Resources  compiler.Resources
-	Tmate      compiler.Tmate
-	Clone      bool
-	Config     string
-	Pretty     bool
-	Procs      int64
-	Debug      bool
-	Trace      bool
-	Dump       bool
-	PublicKey  string
-	PrivateKey string
+	Source           string
+	Include          []string
+	Exclude          []string
+	Privileged       []string
+	Networks         []string
+	Volumes          map[string]string
+	Environ          map[string]string
+	Labels           map[string]string
+	Secrets          map[string]string
+	Resources        compiler.Resources
+	Tmate            compiler.Tmate
+	Clone            bool
+	Config           string
+	Pretty           bool
+	Procs            int64
+	Debug            bool
+	Trace            bool
+	Dump             bool
+	PublicKey        string
+	PrivateKey       string
+	WorkingDirectory string
 }
 
 func mapOldToExecCommand(input *cli.Context) (returnVal *execCommand) {
@@ -74,16 +75,17 @@ func mapOldToExecCommand(input *cli.Context) (returnVal *execCommand) {
 				Host: input.String("instance"),
 			},
 		},
-		Source:     input.Args().First(),
-		Include:    input.StringSlice("include"),
-		Exclude:    input.StringSlice("exclude"),
-		Clone:      input.Bool("clone"),
-		Networks:   input.StringSlice("network"),
-		Environ:    readParams(input.String("env-file")),
-		Volumes:    withVolumeSlice(input.StringSlice("volume")),
-		Secrets:    readParams(input.String("secrets")),
-		Config:     input.String("registry"),
-		Privileged: input.StringSlice("privileged"),
+		Source:           input.Args().First(),
+		Include:          input.StringSlice("include"),
+		Exclude:          input.StringSlice("exclude"),
+		Clone:            input.Bool("clone"),
+		Networks:         input.StringSlice("network"),
+		Environ:          readParams(input.String("env-file")),
+		Volumes:          withVolumeSlice(input.StringSlice("volume")),
+		Secrets:          readParams(input.String("secrets")),
+		Config:           input.String("registry"),
+		Privileged:       input.StringSlice("privileged"),
+		WorkingDirectory: input.String("workdir"),
 	}
 
 	return returnVal

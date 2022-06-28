@@ -92,6 +92,10 @@ var Command = cli.Command{
 			Name:  "env-file",
 			Usage: "env file",
 		},
+		cli.StringFlag{
+			Name:  "workdir",
+			Usage: "rooted working directory",
+		},
 		cli.StringSliceFlag{
 			Name:  "privileged",
 			Usage: "privileged plugins",
@@ -276,7 +280,13 @@ func exec(c *cli.Context) error {
 		),
 	}
 	if c.Bool("clone") == false {
-		pwd, _ := os.Getwd()
+		var pwd string
+		if c.String("workdir") != "" {
+			pwd = c.String("workdir")
+		} else {
+			pwd, _ = os.Getwd()
+		}
+
 		comp.WorkspaceMountFunc = compiler.MountHostWorkspace
 		comp.WorkspaceFunc = compiler.CreateHostWorkspace(pwd)
 	}

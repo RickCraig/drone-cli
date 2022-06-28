@@ -8,7 +8,7 @@ export CGO_ENABLED=0
 # compile for all architectures
 GOOS=linux   GOARCH=amd64   go build -ldflags "-X main.version=${DRONE_TAG##v}" -o release/linux/amd64/drone       ./drone
 GOOS=linux   GOARCH=arm64   go build -ldflags "-X main.version=${DRONE_TAG##v}" -o release/linux/arm64/drone       ./drone
-GOOS=linux   GOARCH=ppc64le go build -ldflags "-X main.version=${DRONE_TAG##v}" -o release/linux/ppc64le/drone       ./drone
+GOOS=linux   GOARCH=ppc64le go build -ldflags "-X main.version=${DRONE_TAG##v}" -o release/linux/ppc64le/drone     ./drone
 GOOS=linux   GOARCH=arm     go build -ldflags "-X main.version=${DRONE_TAG##v}" -o release/linux/arm/drone         ./drone
 GOOS=windows GOARCH=amd64   go build -ldflags "-X main.version=${DRONE_TAG##v}" -o release/windows/amd64/drone.exe ./drone
 GOOS=darwin  GOARCH=amd64   go build -ldflags "-X main.version=${DRONE_TAG##v}" -o release/darwin/amd64/drone      ./drone

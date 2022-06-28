@@ -94,6 +94,10 @@ var Command = cli.Command{
 			Name:  "env-file",
 			Usage: "env file",
 		},
+		cli.StringFlag{
+			Name:  "workdir",
+			Usage: "rooted working directory",
+		},
 		cli.StringSliceFlag{
 			Name:  "privileged",
 			Usage: "privileged plugins",
@@ -227,7 +231,11 @@ func exec(cliContext *cli.Context) error {
 	// disabled in favor of mounting the source code
 	// from the current working directory.
 	if !commy.Clone {
-		comp.Mount, _ = os.Getwd()
+		if commy.WorkingDirectory != "" {
+			comp.Mount = commy.WorkingDirectory
+		} else {
+			comp.Mount, _ = os.Getwd()
+		}
 	}
 
 	args := runtime.CompilerArgs{
